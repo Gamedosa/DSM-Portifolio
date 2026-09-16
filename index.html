@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio acadêmico de Gabriel Melo, estudante de Desenvolvimento de Software Multiplataforma na Fatec Indaiatuba.">
+  <title>Gabriel Melo | Portfólio DSM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b0d;
+      --surface: #101417;
+      --surface-raised: #151b1f;
+      --line: #263137;
+      --line-bright: #3d5159;
+      --text: #edf3f4;
+      --muted: #91a0a5;
+      --accent: #45d6d0;
+      --accent-soft: rgba(69, 214, 208, 0.11);
+      --danger: #ff8f8f;
+      --display: "Outfit", sans-serif;
+      --body: "Source Sans 3", sans-serif;
+      --content: 1140px;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(69, 214, 208, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(69, 214, 208, 0.025) 1px, transparent 1px),
+        var(--bg);
+      background-size: 42px 42px;
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at 82% 8%, rgba(69, 214, 208, 0.08), transparent 28rem);
+      content: "";
+      pointer-events: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    svg {
+      display: block;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--content));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 20;
+      border-bottom: 1px solid transparent;
+      transition: background-color 220ms ease, border-color 220ms ease, backdrop-filter 220ms ease;
+    }
+
+    .site-header.scrolled {
+      border-color: rgba(61, 81, 89, 0.5);
+      background: rgba(9, 11, 13, 0.78);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      display: flex;
+      min-height: 70px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--display);
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 31px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.7rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      transition: color 180ms ease;
+    }
+
+    .nav-links a::after {
+      position: absolute;
+      right: 0;
+      bottom: -7px;
+      left: 0;
+      height: 1px;
+      background: var(--accent);
+      content: "";
+      transform: scaleX(0);
+      transition: transform 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+
+    .menu-button {
+      display: grid;
+      width: 42px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: grid;
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(9, 11, 13, 0.96);
+      transition: max-height 240ms ease;
+    }
+
+    .mobile-menu.open {
+      max-height: 320px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mobile-menu a {
+      padding: 0.85rem 1rem;
+      border-top: 1px solid rgba(38, 49, 55, 0.55);
+      color: var(--muted);
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .hero {
+      display: flex;
+      min-height: min(820px, 100svh);
+      align-items: center;
+      padding: 8.5rem 0 5rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 0 0 1.2rem;
+      color: var(--accent);
+      font-family: var(--display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      font-family: var(--display);
+      letter-spacing: 0;
+      line-height: 1.08;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 1.5rem;
+      font-size: clamp(3.1rem, 12vw, 6.9rem);
+      font-weight: 600;
+    }
+
+    h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--line-bright);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.1rem;
+      border: 1px solid var(--line-bright);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text);
+      font-family: var(--display);
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .button.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #041313;
+    }
+
+    .button.primary:hover {
+      background: #72e2dd;
+      color: #041313;
+    }
+
+    .button.danger:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .hero-code {
+      position: relative;
+      min-height: 330px;
+      border-left: 1px solid var(--line-bright);
+      padding: 2rem 0 2rem 2rem;
+    }
+
+    .hero-code::before,
+    .hero-code::after {
+      position: absolute;
+      left: -4px;
+      width: 7px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--accent);
+      content: "";
+    }
+
+    .hero-code::before { top: 0; }
+    .hero-code::after { bottom: 0; }
+
+    .code-line {
+      margin: 0 0 0.75rem;
+      color: #718087;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(0.82rem, 2vw, 1rem);
+    }
+
+    .code-line:nth-child(2),
+    .code-line:nth-child(5) {
+      color: var(--text);
+    }
+
+    .code-key { color: var(--accent); }
+    .code-value { color: #d9c68d; }
+
+    .section {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-number {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 0;
+      font-size: clamp(2.3rem, 8vw, 4.2rem);
+      font-weight: 500;
+    }
+
+    .section-intro {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .about-grid {
+      display: grid;
+      gap: 3rem;
+    }
+
+    .portrait {
+      position: relative;
+      display: grid;
+      aspect-ratio: 4 / 5;
+      min-height: 340px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .portrait::before {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(9, 11, 13, 0.72), transparent 42%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .portrait-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    .portrait-label {
+      position: absolute;
+      right: 1.25rem;
+      bottom: 1rem;
+      z-index: 2;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .about-copy p {
+      margin: 0 0 1.3rem;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .about-copy strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 2rem;
+    }
+
+    .skill {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: #c6d0d3;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+    }
+
+    .workspace {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .entry-form {
+      display: grid;
+      gap: 1rem;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 20, 23, 0.78);
+    }
+
+    .form-row {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .field label {
+      color: #c6d0d3;
+      font-family: var(--display);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      outline: none;
+      background: #0b0f11;
+      color: var(--text);
+      padding: 0.78rem 0.85rem;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    input[type="file"]::file-selector-button {
+      margin-right: 0.75rem;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      font-family: var(--display);
+    }
+
+    .form-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .storage-note {
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .entries {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .entry-card {
+      position: relative;
+      display: grid;
+      gap: 1rem;
+      padding: 1.25rem;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+    }
+
+    .entry-card::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 3px;
+      background: var(--entry-color, var(--accent));
+      content: "";
+    }
+
+    .entry-card:hover {
+      border-color: var(--line-bright);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+      transform: translateY(-3px);
+    }
+
+    .entry-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+    }
+
+    .entry-card h3 {
+      margin-bottom: 0;
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    .entry-card p {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    .entry-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .entry-actions .button {
+      min-height: 38px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.82rem;
+    }
+
+    .empty-state {
+      padding: 2.5rem 1rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    footer {
+      padding: 2rem 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .footer-link {
+      color: var(--text);
+      transition: color 180ms ease;
+    }
+
+    .footer-link:hover { color: var(--accent); }
+
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 30;
+      max-width: calc(100% - 2rem);
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--line-bright);
+      border-radius: var(--radius);
+      background: #151b1f;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+      color: var(--text);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (min-width: 700px) {
+      .container { width: min(calc(100% - 4rem), var(--content)); }
+      .nav-links { display: flex; }
+      .menu-button, .mobile-menu { display: none; }
+      .hero-grid { grid-template-columns: minmax(0, 1.4fr) minmax(270px, 0.6fr); }
+      .section-heading { grid-template-columns: 90px minmax(0, 1fr); }
+      .section-intro { grid-column: 2; }
+      .about-grid { grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr); }
+      .form-row { grid-template-columns: minmax(0, 1.3fr) minmax(180px, 0.7fr); }
+      .entry-form { padding: 1.6rem; }
+      .entries { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 1000px) {
+      .section { padding: 8rem 0; }
+      .workspace { grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.22fr); align-items: start; }
+      .entry-form { position: sticky; top: 94px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      .fade-in { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="site-header">
+    <nav class="nav container" aria-label="Navegação principal">
+      <a class="brand" href="#inicio" aria-label="Ir ao início">
+        <span class="brand-mark">GM</span>
+        <span>Gabriel Melo</span>
+      </a>
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#reflexoes">Reflexões</a>
+        <a href="#atividades">Atividades</a>
+        <a href="#avaliacoes">Avaliações</a>
+      </div>
+      <button class="menu-button" id="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#sobre">Sobre</a>
+      <a href="#reflexoes">Reflexões</a>
+      <a href="#atividades">Atividades</a>
+      <a href="#avaliacoes">Avaliações</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-grid container">
+        <div>
+          <p class="eyebrow">Portfólio acadêmico 2026</p>
+          <h1 id="hero-title">Gabriel Melo<span>DSM // Fatec Indaiatuba </span></h1>
+          <p class="hero-copy">Desenvolvimento de Software Multiplataforma na Fatec Indaiatuba. Um registro contínuo de aprendizado em Algoritmos e Lógica de Programação.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#reflexoes">Ver registros</a>
+            <a class="button" href="https://www.linkedin.com/in/gabriel-melo-b9b89423b/" target="_blank" rel="noreferrer">
+              LinkedIn
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hero-code" aria-label="Informações acadêmicas">
+          <p class="code-line"><span class="code-key">const</span> estudante = {</p>
+          <p class="code-line">&nbsp;&nbsp;curso: <span class="code-value">"DSM"</span>,</p>
+          <p class="code-line">&nbsp;&nbsp;instituição: <span class="code-value">"Fatec Indaiatuba"</span>,</p>
+          <p class="code-line">&nbsp;&nbsp;disciplina: <span class="code-value">"Algoritmos"</span>,</p>
+          <p class="code-line">&nbsp;&nbsp;status: <span class="code-value">"em evolução"</span></p>
+          <p class="code-line">};</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="sobre" aria-labelledby="sobre-title">
+      <div class="container">
+        <header class="section-heading">
+          <span class="section-number">01 / PERFIL</span>
+          <h2 id="sobre-title">Sobre mim</h2>
+          <p class="section-intro">Construindo fundamentos sólidos para transformar problemas em soluções claras, testáveis e úteis.</p>
+        </header>
+        <div class="about-grid">
+          <div class="portrait" aria-label="Identidade visual de Gabriel Melo">
+            <img class="portrait-image" src="img/foto-perfil.jpg" alt="Foto de perfil de Gabriel Melo">
+            <span class="portrait-label">Fatec Indaiatuba</span>
+          </div>
+          <div class="about-copy">
+            <p>Sou <strong>Gabriel Melo</strong>, estudante de DSM e ADS na Fatec Indaiatuba. Minha formação está direcionada à criação de soluções digitais, combinando raciocínio lógico, organização e aprendizado contínuo.</p>
+            <p>Na disciplina de Algoritmos e Lógica de Programação, desenvolvo a capacidade de decompor desafios, estruturar sequências de decisão e escrever soluções progressivamente mais eficientes. Este portfólio documenta essa trajetória com reflexões, atividades e avaliações.</p>
+            <div class="skills" aria-label="Competências em desenvolvimento">
+              <span class="skill">Lógica de programação</span>
+              <span class="skill">Algoritmos</span>
+              <span class="skill">Resolução de problemas</span>
+              <span class="skill">Pensamento computacional</span>
+              <span class="skill">HTML</span>
+              <span class="skill">CSS</span>
+              <span class="skill">JavaScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="reflexoes" aria-labelledby="reflexoes-title">
+      <div class="container">
+        <header class="section-heading">
+          <span class="section-number">02 / DIÁRIO</span>
+          <h2 id="reflexoes-title">Reflexões</h2>
+          <p class="section-intro">Anotações sobre conceitos, descobertas e desafios encontrados ao longo das aulas.</p>
+        </header>
+        <div class="workspace" data-workspace="reflexao">
+          <form class="entry-form" data-kind="reflexao">
+            <div class="form-row">
+              <div class="field">
+                <label for="reflexao-title">Título</label>
+                <input id="reflexao-title" name="title" type="text" maxlength="90" required>
+              </div>
+              <div class="field">
+                <label for="reflexao-date">Data</label>
+                <input id="reflexao-date" name="date" type="date" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="reflexao-content">Registro</label>
+              <textarea id="reflexao-content" name="content" maxlength="1800" required></textarea>
+            </div>
+            <div class="field">
+              <label for="reflexao-file">Anexo</label>
+              <input id="reflexao-file" name="attachment" type="file">
+            </div>
+            <div class="form-footer">
+              <span class="storage-note">Dados salvos neste navegador</span>
+              <button class="button primary" type="submit">Adicionar reflexão</button>
+            </div>
+          </form>
+          <div class="entries" data-list="reflexao" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="atividades" aria-labelledby="atividades-title">
+      <div class="container">
+        <header class="section-heading">
+          <span class="section-number">03 / PRÁTICA</span>
+          <h2 id="atividades-title">Atividades</h2>
+          <p class="section-intro">Exercícios e implementações produzidos a partir das propostas desenvolvidas em sala de aula.</p>
+        </header>
+        <div class="workspace" data-workspace="atividade">
+          <form class="entry-form" data-kind="atividade">
+            <div class="form-row">
+              <div class="field">
+                <label for="atividade-title">Atividade</label>
+                <input id="atividade-title" name="title" type="text" maxlength="90" required>
+              </div>
+              <div class="field">
+                <label for="atividade-date">Data</label>
+                <input id="atividade-date" name="date" type="date" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="atividade-content">Descrição</label>
+              <textarea id="atividade-content" name="content" maxlength="1800" required></textarea>
+            </div>
+            <div class="field">
+              <label for="atividade-file">Arquivo da atividade</label>
+              <input id="atividade-file" name="attachment" type="file">
+            </div>
+            <div class="form-footer">
+              <span class="storage-note">Dados salvos neste navegador</span>
+              <button class="button primary" type="submit">Publicar atividade</button>
+            </div>
+          </form>
+          <div class="entries" data-list="atividade" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="avaliacoes" aria-labelledby="avaliacoes-title">
+      <div class="container">
+        <header class="section-heading">
+          <span class="section-number">04 / RESULTADOS</span>
+          <h2 id="avaliacoes-title">Avaliações</h2>
+          <p class="section-intro">Entregas avaliativas e evidências da evolução acadêmica durante a disciplina.</p>
+        </header>
+        <div class="workspace" data-workspace="avaliacao">
+          <form class="entry-form" data-kind="avaliacao">
+            <div class="form-row">
+              <div class="field">
+                <label for="avaliacao-title">Avaliação</label>
+                <input id="avaliacao-title" name="title" type="text" maxlength="90" required>
+              </div>
+              <div class="field">
+                <label for="avaliacao-date">Data</label>
+                <input id="avaliacao-date" name="date" type="date" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="avaliacao-content">Descrição</label>
+              <textarea id="avaliacao-content" name="content" maxlength="1800" required></textarea>
+            </div>
+            <div class="field">
+              <label for="avaliacao-file">Arquivo da avaliação</label>
+              <input id="avaliacao-file" name="attachment" type="file">
+            </div>
+            <div class="form-footer">
+              <span class="storage-note">Dados salvos neste navegador</span>
+              <button class="button primary" type="submit">Publicar avaliação</button>
+            </div>
+          </form>
+          <div class="entries" data-list="avaliacao" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner container">
+      <span>Gabriel Melo · DSM · Fatec Indaiatuba</span>
+      <a class="footer-link" href="https://www.linkedin.com/in/gabriel-melo-b9b89423b/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const header = document.querySelector("#site-header");
+    const menuButton = document.querySelector("#menu-button");
+    const mobileMenu = document.querySelector("#mobile-menu");
+    const toast = document.querySelector("#toast");
+    const forms = document.querySelectorAll(".entry-form");
+    const kinds = ["reflexao", "atividade", "avaliacao"];
+    const kindLabels = {
+      reflexao: "Reflexão",
+      atividade: "Atividade",
+      avaliacao: "Avaliação"
+    };
+    const kindColors = {
+      reflexao: "#45d6d0",
+      atividade: "#e4c36a",
+      avaliacao: "#8eaeff"
+    };
+
+    let database;
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open("gabriel-portfolio", 1);
+
+        request.onupgradeneeded = () => {
+          const db = request.result;
+          if (!db.objectStoreNames.contains("entries")) {
+            const store = db.createObjectStore("entries", { keyPath: "id" });
+            store.createIndex("kind", "kind");
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function getEntries(kind) {
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction("entries", "readonly");
+        const request = transaction.objectStore("entries").index("kind").getAll(kind);
+        request.onsuccess = () => resolve(request.result.sort((a, b) => b.createdAt - a.createdAt));
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function saveEntry(entry) {
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction("entries", "readwrite");
+        transaction.objectStore("entries").add(entry);
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+
+    function removeEntry(id) {
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction("entries", "readwrite");
+        transaction.objectStore("entries").delete(id);
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+
+    function escapeHtml(value) {
+      const element = document.createElement("div");
+      element.textContent = value;
+      return element.innerHTML;
+    }
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+    }
+
+    async function renderEntries(kind) {
+      const list = document.querySelector(`[data-list="${kind}"]`);
+      const entries = await getEntries(kind);
+
+      if (!entries.length) {
+        list.innerHTML = `<div class="empty-state">Nenhum registro publicado.</div>`;
+        return;
+      }
+
+      list.innerHTML = entries.map((entry) => `
+        <article class="entry-card" data-entry-id="${entry.id}" style="--entry-color: ${kindColors[kind]}">
+          <div class="entry-meta">
+            <span>${kindLabels[kind]}</span>
+            <time datetime="${entry.date}">${formatDate(entry.date)}</time>
+          </div>
+          <h3>${escapeHtml(entry.title)}</h3>
+          <p>${escapeHtml(entry.content)}</p>
+          <div class="entry-actions">
+            ${entry.file ? `<button class="button download-button" type="button">Baixar ${escapeHtml(entry.file.name)}</button>` : ""}
+            <button class="button danger delete-button" type="button">Excluir</button>
+          </div>
+        </article>
+      `).join("");
+
+      entries.forEach((entry) => {
+        const card = list.querySelector(`[data-entry-id="${entry.id}"]`);
+        card.querySelector(".delete-button").addEventListener("click", async () => {
+          await removeEntry(entry.id);
+          await renderEntries(kind);
+          showToast("Registro excluído.");
+        });
+
+        const downloadButton = card.querySelector(".download-button");
+        if (downloadButton) {
+          downloadButton.addEventListener("click", () => {
+            const url = URL.createObjectURL(entry.file.blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = entry.file.name;
+            link.click();
+            window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+          });
+        }
+      });
+    }
+
+    forms.forEach((form) => {
+      form.querySelector('[name="date"]').valueAsDate = new Date();
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const submitButton = form.querySelector('[type="submit"]');
+        const formData = new FormData(form);
+        const selectedFile = formData.get("attachment");
+        const kind = form.dataset.kind;
+        const entry = {
+          id: crypto.randomUUID(),
+          kind,
+          title: formData.get("title").trim(),
+          content: formData.get("content").trim(),
+          date: formData.get("date"),
+          createdAt: Date.now(),
+          file: selectedFile && selectedFile.size ? {
+            name: selectedFile.name,
+            type: selectedFile.type,
+            blob: selectedFile
+          } : null
+        };
+
+        submitButton.disabled = true;
+        try {
+          await saveEntry(entry);
+          form.reset();
+          form.querySelector('[name="date"]').valueAsDate = new Date();
+          await renderEntries(kind);
+          showToast(`${kindLabels[kind]} publicada.`);
+        } catch (error) {
+          showToast("Não foi possível salvar o registro.");
+          console.error(error);
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    });
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+    });
+
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".fade-in").forEach((section) => revealObserver.observe(section));
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll(".nav-links a").forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+          });
+        }
+      });
+    }, { rootMargin: "-35% 0px -55%", threshold: 0 });
+
+    document.querySelectorAll("main section[id]").forEach((section) => sectionObserver.observe(section));
+    window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
+
+    openDatabase()
+      .then((db) => {
+        database = db;
+        return Promise.all(kinds.map(renderEntries));
+      })
+      .catch((error) => {
+        forms.forEach((form) => form.querySelector('[type="submit"]').disabled = true);
+        showToast("O armazenamento local não está disponível.");
+        console.error(error);
+      });
+  </script>
+</body>
+</html>

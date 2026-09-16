@@ -301,11 +301,6 @@
       color: #041313;
     }
 
-    .button.danger:hover {
-      border-color: var(--danger);
-      color: var(--danger);
-    }
-
     .hero-code {
       position: relative;
       min-height: 330px;
@@ -448,78 +443,6 @@
       gap: 2.5rem;
     }
 
-    .entry-form {
-      display: grid;
-      gap: 1rem;
-      padding: 1.25rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(16, 20, 23, 0.78);
-    }
-
-    .form-row {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .field {
-      display: grid;
-      gap: 0.4rem;
-    }
-
-    .field label {
-      color: #c6d0d3;
-      font-family: var(--display);
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    .field input,
-    .field textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      outline: none;
-      background: #0b0f11;
-      color: var(--text);
-      padding: 0.78rem 0.85rem;
-      transition: border-color 180ms ease, box-shadow 180ms ease;
-    }
-
-    .field textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-soft);
-    }
-
-    input[type="file"]::file-selector-button {
-      margin-right: 0.75rem;
-      border: 0;
-      border-right: 1px solid var(--line);
-      background: transparent;
-      color: var(--accent);
-      cursor: pointer;
-      font-family: var(--display);
-    }
-
-    .form-footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .storage-note {
-      color: var(--muted);
-      font-size: 0.76rem;
-    }
-
     .entries {
       display: grid;
       gap: 1rem;
@@ -629,29 +552,6 @@
 
     .footer-link:hover { color: var(--accent); }
 
-    .toast {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      z-index: 30;
-      max-width: calc(100% - 2rem);
-      padding: 0.8rem 1rem;
-      border: 1px solid var(--line-bright);
-      border-radius: var(--radius);
-      background: #151b1f;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
-      color: var(--text);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(12px);
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: none;
-    }
-
     @media (min-width: 700px) {
       .container { width: min(calc(100% - 4rem), var(--content)); }
       .nav-links { display: flex; }
@@ -660,15 +560,11 @@
       .section-heading { grid-template-columns: 90px minmax(0, 1fr); }
       .section-intro { grid-column: 2; }
       .about-grid { grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr); }
-      .form-row { grid-template-columns: minmax(0, 1.3fr) minmax(180px, 0.7fr); }
-      .entry-form { padding: 1.6rem; }
       .entries { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (min-width: 1000px) {
       .section { padding: 8rem 0; }
-      .workspace { grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.22fr); align-items: start; }
-      .entry-form { position: sticky; top: 94px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -768,30 +664,6 @@
           <p class="section-intro">Anotações sobre conceitos, descobertas e desafios encontrados ao longo das aulas.</p>
         </header>
         <div class="workspace" data-workspace="reflexao">
-          <form class="entry-form" data-kind="reflexao">
-            <div class="form-row">
-              <div class="field">
-                <label for="reflexao-title">Título</label>
-                <input id="reflexao-title" name="title" type="text" maxlength="90" required>
-              </div>
-              <div class="field">
-                <label for="reflexao-date">Data</label>
-                <input id="reflexao-date" name="date" type="date" required>
-              </div>
-            </div>
-            <div class="field">
-              <label for="reflexao-content">Registro</label>
-              <textarea id="reflexao-content" name="content" maxlength="1800" required></textarea>
-            </div>
-            <div class="field">
-              <label for="reflexao-file">Anexo</label>
-              <input id="reflexao-file" name="attachment" type="file">
-            </div>
-            <div class="form-footer">
-              <span class="storage-note">Dados salvos neste navegador</span>
-              <button class="button primary" type="submit">Adicionar reflexão</button>
-            </div>
-          </form>
           <div class="entries" data-list="reflexao" aria-live="polite"></div>
         </div>
       </div>
@@ -805,30 +677,6 @@
           <p class="section-intro">Exercícios e implementações produzidos a partir das propostas desenvolvidas em sala de aula.</p>
         </header>
         <div class="workspace" data-workspace="atividade">
-          <form class="entry-form" data-kind="atividade">
-            <div class="form-row">
-              <div class="field">
-                <label for="atividade-title">Atividade</label>
-                <input id="atividade-title" name="title" type="text" maxlength="90" required>
-              </div>
-              <div class="field">
-                <label for="atividade-date">Data</label>
-                <input id="atividade-date" name="date" type="date" required>
-              </div>
-            </div>
-            <div class="field">
-              <label for="atividade-content">Descrição</label>
-              <textarea id="atividade-content" name="content" maxlength="1800" required></textarea>
-            </div>
-            <div class="field">
-              <label for="atividade-file">Arquivo da atividade</label>
-              <input id="atividade-file" name="attachment" type="file">
-            </div>
-            <div class="form-footer">
-              <span class="storage-note">Dados salvos neste navegador</span>
-              <button class="button primary" type="submit">Publicar atividade</button>
-            </div>
-          </form>
           <div class="entries" data-list="atividade" aria-live="polite"></div>
         </div>
       </div>
@@ -842,30 +690,6 @@
           <p class="section-intro">Entregas avaliativas e evidências da evolução acadêmica durante a disciplina.</p>
         </header>
         <div class="workspace" data-workspace="avaliacao">
-          <form class="entry-form" data-kind="avaliacao">
-            <div class="form-row">
-              <div class="field">
-                <label for="avaliacao-title">Avaliação</label>
-                <input id="avaliacao-title" name="title" type="text" maxlength="90" required>
-              </div>
-              <div class="field">
-                <label for="avaliacao-date">Data</label>
-                <input id="avaliacao-date" name="date" type="date" required>
-              </div>
-            </div>
-            <div class="field">
-              <label for="avaliacao-content">Descrição</label>
-              <textarea id="avaliacao-content" name="content" maxlength="1800" required></textarea>
-            </div>
-            <div class="field">
-              <label for="avaliacao-file">Arquivo da avaliação</label>
-              <input id="avaliacao-file" name="attachment" type="file">
-            </div>
-            <div class="form-footer">
-              <span class="storage-note">Dados salvos neste navegador</span>
-              <button class="button primary" type="submit">Publicar avaliação</button>
-            </div>
-          </form>
           <div class="entries" data-list="avaliacao" aria-live="polite"></div>
         </div>
       </div>
@@ -879,15 +703,21 @@
     </div>
   </footer>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
   <script>
     const header = document.querySelector("#site-header");
     const menuButton = document.querySelector("#menu-button");
     const mobileMenu = document.querySelector("#mobile-menu");
-    const toast = document.querySelector("#toast");
-    const forms = document.querySelectorAll(".entry-form");
     const kinds = ["reflexao", "atividade", "avaliacao"];
+    const repository = {
+      owner: "Gamedosa",
+      name: "DSM-Portifolio",
+      branch: "main",
+      folders: {
+        reflexao: "reflexoes",
+        atividade: "atividades",
+        avaliacao: "avaliacoes"
+      }
+    };
     const kindLabels = {
       reflexao: "Reflexão",
       atividade: "Atividade",
@@ -899,60 +729,6 @@
       avaliacao: "#8eaeff"
     };
 
-    let database;
-    let toastTimer;
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      window.clearTimeout(toastTimer);
-      toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2600);
-    }
-
-    function openDatabase() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open("gabriel-portfolio", 1);
-
-        request.onupgradeneeded = () => {
-          const db = request.result;
-          if (!db.objectStoreNames.contains("entries")) {
-            const store = db.createObjectStore("entries", { keyPath: "id" });
-            store.createIndex("kind", "kind");
-          }
-        };
-
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    function getEntries(kind) {
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction("entries", "readonly");
-        const request = transaction.objectStore("entries").index("kind").getAll(kind);
-        request.onsuccess = () => resolve(request.result.sort((a, b) => b.createdAt - a.createdAt));
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    function saveEntry(entry) {
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction("entries", "readwrite");
-        transaction.objectStore("entries").add(entry);
-        transaction.oncomplete = resolve;
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-
-    function removeEntry(id) {
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction("entries", "readwrite");
-        transaction.objectStore("entries").delete(id);
-        transaction.oncomplete = resolve;
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-
     function escapeHtml(value) {
       const element = document.createElement("div");
       element.textContent = value;
@@ -960,12 +736,125 @@
     }
 
     function formatDate(value) {
+      if (!value) return "Sem data";
       return new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
     }
 
-    async function renderEntries(kind) {
+    function humanizeFileName(name) {
+      return name
+        .replace(/\.[^.]+$/, "")
+        .replace(/^\d{4}-\d{2}-\d{2}[-_ ]*/, "")
+        .replace(/[-_]+/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    }
+
+    function inferDate(name) {
+      return name.match(/\d{4}-\d{2}-\d{2}/)?.[0] || "";
+    }
+
+    function parseMarkdown(markdown, fallbackTitle) {
+      const frontMatterMatch = markdown.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?/);
+      const metadata = {};
+      let body = markdown;
+
+      if (frontMatterMatch) {
+        frontMatterMatch[1].split(/\r?\n/).forEach((line) => {
+          const separator = line.indexOf(":");
+          if (separator > 0) {
+            metadata[line.slice(0, separator).trim()] = line.slice(separator + 1).trim().replace(/^['"]|['"]$/g, "");
+          }
+        });
+        body = markdown.slice(frontMatterMatch[0].length);
+      }
+
+      const heading = body.match(/^#\s+(.+)$/m)?.[1]?.trim();
+      const text = body
+        .replace(/^#\s+.+$/m, "")
+        .replace(/!\[[^\]]*\]\([^)]+\)/g, "")
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/^#{1,6}\s+/gm, "")
+        .replace(/[*_~`>]/g, "")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+      return {
+        title: metadata.title || heading || fallbackTitle,
+        date: metadata.date || "",
+        content: metadata.description || text || "Arquivo publicado no repositório."
+      };
+    }
+
+    async function requestJson(url) {
+      const response = await fetch(url, {
+        headers: { Accept: "application/vnd.github+json" }
+      });
+      if (!response.ok) throw new Error(`GitHub API: ${response.status}`);
+      return response.json();
+    }
+
+    async function requestText(url) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Arquivo: ${response.status}`);
+      return response.text();
+    }
+
+    async function createFileEntry(file) {
+      const fallbackTitle = humanizeFileName(file.name);
+      const isMarkdown = file.name.toLowerCase().endsWith(".md");
+      const details = isMarkdown
+        ? parseMarkdown(await requestText(file.download_url), fallbackTitle)
+        : { title: fallbackTitle, date: "", content: "Arquivo publicado no repositório." };
+
+      return {
+        ...details,
+        date: details.date || inferDate(file.name),
+        files: [{ name: `Abrir ${file.name}`, path: file.download_url || file.html_url }]
+      };
+    }
+
+    async function createFolderEntry(folder) {
+      const children = await requestJson(`${folder.url}?ref=${repository.branch}`);
+      const readme = children.find((item) => item.type === "file" && item.name.toLowerCase() === "readme.md");
+      const details = readme
+        ? parseMarkdown(await requestText(readme.download_url), humanizeFileName(folder.name))
+        : { title: humanizeFileName(folder.name), date: "", content: "Materiais publicados no repositório." };
+      const attachments = children
+        .filter((item) => item.type === "file" && item !== readme)
+        .map((item) => ({ name: `Abrir ${item.name}`, path: item.download_url || item.html_url }));
+
+      return {
+        ...details,
+        date: details.date || inferDate(folder.name),
+        files: attachments.length
+          ? attachments
+          : [{ name: "Abrir pasta no GitHub", path: folder.html_url }]
+      };
+    }
+
+    async function loadEntries(kind) {
       const list = document.querySelector(`[data-list="${kind}"]`);
-      const entries = await getEntries(kind);
+      const folder = repository.folders[kind];
+      const url = `https://api.github.com/repos/${repository.owner}/${repository.name}/contents/${folder}?ref=${repository.branch}`;
+      list.innerHTML = `<div class="empty-state">Carregando publicações...</div>`;
+
+      try {
+        const items = await requestJson(url);
+        const directFiles = items.filter((item) => item.type === "file" && item.name.toLowerCase() !== "readme.md");
+        const folders = items.filter((item) => item.type === "dir");
+        const entries = await Promise.all([
+          ...directFiles.map(createFileEntry),
+          ...folders.map(createFolderEntry)
+        ]);
+        renderEntries(kind, entries);
+      } catch (error) {
+        list.innerHTML = `<div class="empty-state">Não foi possível carregar as publicações do GitHub.</div>`;
+        console.error(error);
+      }
+    }
+
+    function renderEntries(kind, entries) {
+      const list = document.querySelector(`[data-list="${kind}"]`);
+      entries.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 
       if (!entries.length) {
         list.innerHTML = `<div class="empty-state">Nenhum registro publicado.</div>`;
@@ -973,79 +862,19 @@
       }
 
       list.innerHTML = entries.map((entry) => `
-        <article class="entry-card" data-entry-id="${entry.id}" style="--entry-color: ${kindColors[kind]}">
+        <article class="entry-card" style="--entry-color: ${kindColors[kind]}">
           <div class="entry-meta">
             <span>${kindLabels[kind]}</span>
-            <time datetime="${entry.date}">${formatDate(entry.date)}</time>
+            ${entry.date ? `<time datetime="${entry.date}">${formatDate(entry.date)}</time>` : `<span>${formatDate("")}</span>`}
           </div>
           <h3>${escapeHtml(entry.title)}</h3>
           <p>${escapeHtml(entry.content)}</p>
           <div class="entry-actions">
-            ${entry.file ? `<button class="button download-button" type="button">Baixar ${escapeHtml(entry.file.name)}</button>` : ""}
-            <button class="button danger delete-button" type="button">Excluir</button>
+            ${(entry.files || []).map((file) => `<a class="button" href="${escapeHtml(file.path)}" target="_blank" rel="noreferrer">${escapeHtml(file.name)}</a>`).join("")}
           </div>
         </article>
       `).join("");
-
-      entries.forEach((entry) => {
-        const card = list.querySelector(`[data-entry-id="${entry.id}"]`);
-        card.querySelector(".delete-button").addEventListener("click", async () => {
-          await removeEntry(entry.id);
-          await renderEntries(kind);
-          showToast("Registro excluído.");
-        });
-
-        const downloadButton = card.querySelector(".download-button");
-        if (downloadButton) {
-          downloadButton.addEventListener("click", () => {
-            const url = URL.createObjectURL(entry.file.blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = entry.file.name;
-            link.click();
-            window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-          });
-        }
-      });
     }
-
-    forms.forEach((form) => {
-      form.querySelector('[name="date"]').valueAsDate = new Date();
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const submitButton = form.querySelector('[type="submit"]');
-        const formData = new FormData(form);
-        const selectedFile = formData.get("attachment");
-        const kind = form.dataset.kind;
-        const entry = {
-          id: crypto.randomUUID(),
-          kind,
-          title: formData.get("title").trim(),
-          content: formData.get("content").trim(),
-          date: formData.get("date"),
-          createdAt: Date.now(),
-          file: selectedFile && selectedFile.size ? {
-            name: selectedFile.name,
-            type: selectedFile.type,
-            blob: selectedFile
-          } : null
-        };
-
-        submitButton.disabled = true;
-        try {
-          await saveEntry(entry);
-          form.reset();
-          form.querySelector('[name="date"]').valueAsDate = new Date();
-          await renderEntries(kind);
-          showToast(`${kindLabels[kind]} publicada.`);
-        } catch (error) {
-          showToast("Não foi possível salvar o registro.");
-          console.error(error);
-        } finally {
-          submitButton.disabled = false;
-        }
-      });
-    });
 
     menuButton.addEventListener("click", () => {
       const isOpen = mobileMenu.classList.toggle("open");
@@ -1084,16 +913,7 @@
     document.querySelectorAll("main section[id]").forEach((section) => sectionObserver.observe(section));
     window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
 
-    openDatabase()
-      .then((db) => {
-        database = db;
-        return Promise.all(kinds.map(renderEntries));
-      })
-      .catch((error) => {
-        forms.forEach((form) => form.querySelector('[type="submit"]').disabled = true);
-        showToast("O armazenamento local não está disponível.");
-        console.error(error);
-      });
+    kinds.forEach(loadEntries);
   </script>
 </body>
 </html>

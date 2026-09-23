@@ -712,7 +712,7 @@
       owner: "Gamedosa",
       name: "DSM-Portifolio",
       branch: "main",
-      additionalBranches: ["add-exercise"],
+      additionalBranches: [],
       folders: {
         reflexao: "reflexoes",
         atividade: "atividades",
@@ -813,9 +813,8 @@
           const name = decodeURIComponent(href.replace(/\/$/, "").split("/").pop());
           const path = `${normalizedFolder}/${name}`;
           const url = new URL(href, response.url).href;
-          const previewBranch = repository.additionalBranches?.[0] || repository.branch;
           const githubView = isDirectory ? "tree" : "blob";
-          const githubUrl = `https://github.com/${repository.owner}/${repository.name}/${githubView}/${previewBranch}/${path}`;
+          const githubUrl = `https://github.com/${repository.owner}/${repository.name}/${githubView}/${repository.branch}/${path}`;
 
           return {
             name,

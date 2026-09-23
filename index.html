@@ -632,7 +632,7 @@
         <header class="section-heading">
           <span class="section-number">01 / PERFIL</span>
           <h2 id="sobre-title">Sobre mim</h2>
-          <p class="section-intro">Construindo fundamentos sólidos para transformar problemas em soluções claras, testáveis e úteis.</p>
+          <p class="section-intro">Explorando desenvolvimento e infraestrutura para construir aplicações confiáveis e bem organizadas.</p>
         </header>
         <div class="about-grid">
           <div class="portrait" aria-label="Identidade visual de Gabriel Melo">
@@ -640,16 +640,16 @@
             <span class="portrait-label">Fatec Indaiatuba</span>
           </div>
           <div class="about-copy">
-            <p>Sou <strong>Gabriel Melo</strong>, estudante de DSM e ADS na Fatec Indaiatuba. Minha formação está direcionada à criação de soluções digitais, combinando raciocínio lógico, organização e aprendizado contínuo.</p>
-            <p>Na disciplina de Algoritmos e Lógica de Programação, desenvolvo a capacidade de decompor desafios, estruturar sequências de decisão e escrever soluções progressivamente mais eficientes. Este portfólio documenta essa trajetória com reflexões, atividades e avaliações.</p>
+            <p>Sou <strong>Gabriel Melo</strong>, estudante de DSM e ADS na Fatec Indaiatuba. Estou iniciando minha trajetória em DevOps e tenho interesse em entender como desenvolvimento, infraestrutura e automação trabalham juntos para manter aplicações disponíveis e confiáveis.</p>
+            <p>Tenho explorado serviços da AWS, infraestrutura como código com Terraform, configuração de servidores com Nginx e desenvolvimento com TypeScript. Este portfólio reúne parte do meu aprendizado acadêmico enquanto continuo ampliando minha experiência nessas tecnologias.</p>
             <div class="skills" aria-label="Competências em desenvolvimento">
-              <span class="skill">Lógica de programação</span>
-              <span class="skill">Algoritmos</span>
-              <span class="skill">Resolução de problemas</span>
-              <span class="skill">Pensamento computacional</span>
-              <span class="skill">HTML</span>
-              <span class="skill">CSS</span>
-              <span class="skill">JavaScript</span>
+              <span class="skill">DevOps</span>
+              <span class="skill">AWS</span>
+              <span class="skill">Terraform</span>
+              <span class="skill">Nginx</span>
+              <span class="skill">TypeScript</span>
+              <span class="skill">Linux</span>
+              <span class="skill">Git</span>
             </div>
           </div>
         </div>
@@ -712,6 +712,7 @@
       owner: "Gamedosa",
       name: "DSM-Portifolio",
       branch: "main",
+      additionalBranches: ["add-exercise"],
       folders: {
         reflexao: "reflexoes",
         atividade: "atividades",
@@ -798,6 +799,36 @@
       return response.text();
     }
 
+    async function requestLocalDirectory(folder) {
+      const normalizedFolder = folder.replace(/^\/+|\/+$/g, "");
+      const response = await fetch(`/${normalizedFolder}/`);
+      if (!response.ok) throw new Error(`Pasta local: ${response.status}`);
+
+      const documentFragment = new DOMParser().parseFromString(await response.text(), "text/html");
+      return [...documentFragment.querySelectorAll("a")]
+        .map((link) => link.getAttribute("href"))
+        .filter((href) => href && href !== "../" && !href.startsWith("?"))
+        .map((href) => {
+          const isDirectory = href.endsWith("/");
+          const name = decodeURIComponent(href.replace(/\/$/, "").split("/").pop());
+          const path = `${normalizedFolder}/${name}`;
+          const url = new URL(href, response.url).href;
+          const previewBranch = repository.additionalBranches?.[0] || repository.branch;
+          const githubView = isDirectory ? "tree" : "blob";
+          const githubUrl = `https://github.com/${repository.owner}/${repository.name}/${githubView}/${previewBranch}/${path}`;
+
+          return {
+            name,
+            path,
+            type: isDirectory ? "dir" : "file",
+            download_url: url,
+            html_url: githubUrl,
+            url,
+            sourceBranch: "local"
+          };
+        });
+    }
+
     async function createFileEntry(file) {
       const fallbackTitle = humanizeFileName(file.name);
       const isMarkdown = file.name.toLowerCase().endsWith(".md");
@@ -808,19 +839,27 @@
       return {
         ...details,
         date: details.date || inferDate(file.name),
-        files: [{ name: `Abrir ${file.name}`, path: file.download_url || file.html_url }]
+        files: [{
+          name: `Abrir ${file.name}`,
+          path: isMarkdown ? file.html_url : file.download_url || file.html_url
+        }]
       };
     }
 
     async function createFolderEntry(folder) {
-      const children = await requestJson(`${folder.url}?ref=${repository.branch}`);
+      const children = folder.sourceBranch === "local"
+        ? await requestLocalDirectory(folder.path)
+        : await requestJson(`${folder.url}?ref=${folder.sourceBranch}`);
       const readme = children.find((item) => item.type === "file" && item.name.toLowerCase() === "readme.md");
       const details = readme
         ? parseMarkdown(await requestText(readme.download_url), humanizeFileName(folder.name))
         : { title: humanizeFileName(folder.name), date: "", content: "Materiais publicados no repositório." };
       const attachments = children
-        .filter((item) => item.type === "file" && item !== readme)
-        .map((item) => ({ name: `Abrir ${item.name}`, path: item.download_url || item.html_url }));
+        .filter((item) => item.type === "file" && item !== readme && !item.name.toLowerCase().endsWith(".docx"))
+        .map((item) => ({
+          name: `Abrir ${item.name}`,
+          path: item.name.toLowerCase().endsWith(".md") ? item.html_url : item.download_url || item.html_url
+        }));
 
       return {
         ...details,
@@ -834,12 +873,33 @@
     async function loadEntries(kind) {
       const list = document.querySelector(`[data-list="${kind}"]`);
       const folder = repository.folders[kind];
-      const url = `https://api.github.com/repos/${repository.owner}/${repository.name}/contents/${folder}?ref=${repository.branch}`;
+      const branches = [repository.branch, ...(repository.additionalBranches || [])];
       list.innerHTML = `<div class="empty-state">Carregando publicações...</div>`;
 
       try {
-        const items = await requestJson(url);
-        const directFiles = items.filter((item) => item.type === "file" && item.name.toLowerCase() !== "readme.md");
+        let items;
+        if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+          items = await requestLocalDirectory(folder);
+        } else {
+          const branchItems = await Promise.all(branches.map(async (branch) => {
+            const url = `https://api.github.com/repos/${repository.owner}/${repository.name}/contents/${folder}?ref=${branch}`;
+            try {
+              const items = await requestJson(url);
+              return items.map((item) => ({ ...item, sourceBranch: branch }));
+            } catch (error) {
+              if (branch === repository.branch) throw error;
+              console.warn(`Não foi possível carregar a branch ${branch}.`, error);
+              return [];
+            }
+          }));
+          const uniqueItems = new Map();
+          branchItems.flat().forEach((item) => uniqueItems.set(`${item.type}:${item.name}`, item));
+          items = [...uniqueItems.values()];
+        }
+        const directFiles = items.filter((item) => {
+          const name = item.name.toLowerCase();
+          return item.type === "file" && name !== "readme.md" && !name.endsWith(".docx");
+        });
         const folders = items.filter((item) => item.type === "dir");
         const entries = await Promise.all([
           ...directFiles.map(createFileEntry),
